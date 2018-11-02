@@ -11,7 +11,7 @@ router.get("/", surveyorController.getAllSurveyor);
 router.put("/:id/update", surveyorController.updateSurveyor);
 router.post("/", surveyorController.createNewSurveyor);
 router.delete("/:id/delete", surveyorController.deleteSurveyor);
-// router.post("/login", (function(req,res)
+router.post("/login", surveyorController.loginSurveyor);
 
 
 /* Export the router */

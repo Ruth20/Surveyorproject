@@ -4,34 +4,6 @@ const bcrypt =require("bcrypt");
 /* Salt Rounds for encrypting passwords */
 const saltRounds = 10;
 
-/*implementing login*/
-       let surveyorPassword = {
-           createNewSurveyor:function(req,res){
-               let newSurveyor = req.body.email && req.body.password;
-               bcrypt.hash(email,  saltRounds);
-               bcrypt.compare(email,password);
-               if(res){
-                   util.sendSuccess(res,'Successfully Login');
-               }
-               else{
-                   util.sendError(res,'Invalid Password');
-               }
-               }
-           };
-       
-    // createNewSurveyor: function (req,res);
-        // let newSurveyor= req.body.email && req.body.password;
-        // bcrypt.hash(email,saltRounds);
-        // bcrypt.compare(email, password);
-        // if(res){
-        //     util.sendSuccess(res,"Successfully Login ");
-        // }
-        // else{
-        //     util.sendError(res,"Invalid Password");
-
-        // };
-    
-
 
 
 
@@ -63,55 +35,81 @@ let surveyorController  = {
     
     },
    
+    getAllSurveyor: function (req, res) {
+        Surveyor.find(function(err, surveyors) {
+                    if(err) {
+                        util.sendError(res, err);
+                    }else{
+                        util.sendSuccess(res, surveyors);   
+                    }
+        });
+    },
 
-
-        getAllSurveyor: function (req, res) {
-            Surveyor.find(function(err, surveyors) {
-                        if(err) {
-                            util.sendError(res, err);
-                        }else{
-                            util.sendSuccess(res, surveyors);   
-                        }
+    updateSurveyor: function (req,res){
+        Surveyor.findByIdAndUpdate(req.params.id, 
+                req.body,
+                function(err,updated){
+                    if(err) {
+                        util.sendError(res, err);
+                    }else{
+                        util.sendSuccess(res, updated);   
+                    }
+                
+        
             });
-        },
+    },
 
-updateSurveyor:function (req,res){
-       Surveyor.findByIdAndUpdate(req.params.id, 
-            req.body,
-            function(err,updated){
+    deleteSurveyor: function(req,res){
+        Surveyor.findByIdAndRemove(req.params.id,
+            function(err, deleted){
                 if(err) {
                     util.sendError(res, err);
                 }else{
-                    util.sendSuccess(res, updated);   
+                    util.sendSuccess(res, deleted);   
                 }
-               
-    
-        });
-  },
 
-  deleteSurveyor:function(req,res){
-  Surveyor.findByIdAndRemove(req.params.id,
-    function(err, deleted){
-        if(err) {
-            util.sendError(res, err);
-        }else{
-            util.sendSuccess(res, deleted);   
-        }
-
-            
-        });
+                    
+                });
     },
-    
+    /*implementing login*/
+    loginSurveyor: function (req,res){
+        let surveyor = req.body;
+         Surveyor.find({ email: surveyor.email }, function(err, surveyors){
+            if(err){
+                util.sendError(res,"error occured while locating user")
+            }else{
+                if(surveyors.length === 0) {
+                    util.sendError("User does not exist");
+                }else{
+                    /* Compare passwords */
+                    let currentSurveyor = surveyors[0];
+                    
+                    let isMatched = bcrypt.compareSync(surveyor.password, currentSurveyor.password);
 
+                    if(isMatched) {
+                        util.sendSuccess(res, currentSurveyor);
+                    }else{
+                        util.sendError(res, "Invalid password");
+                    }
+                }
+            }
+        
+        });
+    }
+}
 
-};
+//          bcrypt.compare(email,password);
+//          bcrypt.hash(email,  saltRounds);
+        
+//          if(res){
+//              util.sendSuccess(res,'Successfully Login');
+//          }
+//          else{
+//              util.sendError(res,'Invalid Password');
+//          }
+//     }
 
-
-
-
-   
-
-
+// };
 
 
 
