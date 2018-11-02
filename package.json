@@ -1,0 +1,20 @@
+{
+  "name": "surveyorsmine-api",
+  "version": "1.0.0",
+  "description": "An API for the Surveyorsmine Project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "author": "The Garage (Backend Team)",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.2",
+    "body": "^5.1.0",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.8",
+    "parser": "^0.1.4"
+  }
+}
