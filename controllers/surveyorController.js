@@ -79,7 +79,7 @@ let surveyorController  = {
                 util.sendError(res,"error occured while locating user")
             }else{
                 if(surveyors.length === 0) {
-                    util.sendError("User does not exist");
+                    util.sendError(res, "User does not exist");
                 }else{
                     /* Compare passwords */
                     let currentSurveyor = surveyors[0];
