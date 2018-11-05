@@ -1,19 +1,22 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-let PlanSchema={
+let PlanSchema= new Schema({
+    requestId: { type: Schema.Types.ObjectId, required: true },
     title:String,
-    lname:String,
     location:String,
-    pnumber:String,
-    use: {
+    planNumber:String,
+    landUse: {
         type:String,
-            enum:['primary','coperate']
-        },
-        zone:Number,
-        size: Number,
-        number_of_beacons:Number,
-        cost_of_nis:Number,
-        cost_of_ssce:Number,
-}
+        enum: ['private','corporate']
+    },
+    zone: Number,
+    landSize: Number,
+    numBeacons: Number,
+    nisCost: Number,
+    ssceCost: Number,
+    mandatoryDeposit: Number
+});
+
+
 module.exports=mongoose.model('Plan',PlanSchema);

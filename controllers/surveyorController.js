@@ -10,6 +10,7 @@ const saltRounds = 10;
 
 
 
+
 //*Define the controller object */
 
 let surveyorController  = {
@@ -31,10 +32,7 @@ let surveyorController  = {
         }else{
             util.sendError(res, "Password does not match");
         }
-    
-    
     },
-   
     getAllSurveyor: function (req, res) {
         Surveyor.find(function(err, surveyors) {
                     if(err) {
